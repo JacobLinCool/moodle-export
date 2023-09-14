@@ -1,5 +1,8 @@
 import { load } from "cheerio";
+import { ext } from "../debug";
 import type { Attendee } from "./types";
+
+const log = ext("course-attendee");
 
 /**
  * Fetches the attendees of a course with the given ID from the specified base URL.
@@ -17,9 +20,11 @@ export async function fetch_course_attendees(
 	url.pathname = "/user/index.php";
 	url.searchParams.set("id", id.toString());
 	url.searchParams.set("perpage", "5000");
+	log("Fetching attendees", url);
 
 	const res = await fetch(url);
 	const html = await res.text();
+	log("Fetched response", html);
 
 	const $ = load(html);
 	const rows = $("tr[id^=user-index-participants][class='']").toArray();
@@ -41,5 +46,6 @@ export async function fetch_course_attendees(
 		});
 	}
 
+	log("Fetched attendees", attendees);
 	return attendees;
 }

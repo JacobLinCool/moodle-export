@@ -1,5 +1,8 @@
 import { load } from "cheerio";
 import cookie from "fetch-cookie";
+import { ext } from "../debug";
+
+const log = ext("auth");
 
 /**
  * Logs in to the Moodle site using the provided credentials and returns a fetch instance with authenticated cookies.
@@ -21,6 +24,8 @@ export async function login(
 
 	const url = new URL(base);
 	url.pathname = "/login/index.php";
+	log("Logging in", url, logintoken, username, password);
+
 	const res = await f(url, {
 		method: "POST",
 		headers: {
@@ -37,6 +42,7 @@ export async function login(
 		throw new Error("Login failed");
 	}
 
+	log("Logged in");
 	return f;
 }
 
@@ -67,6 +73,7 @@ export async function get_logintoken(
 	fetch: typeof globalThis.fetch,
 	base: string,
 ): Promise<string> {
+	log("Fetching login token", base);
 	const url = new URL(base);
 
 	const res = await fetch(url);
@@ -78,5 +85,6 @@ export async function get_logintoken(
 		throw new Error("Could not get logintoken");
 	}
 
+	log("Got login token", logintoken);
 	return logintoken;
 }

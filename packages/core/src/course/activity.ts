@@ -1,5 +1,8 @@
 import { load } from "cheerio";
+import { ext } from "../debug";
 import type { ActivityMeta, ActivityType } from "./types";
+
+const log = ext("course-activity");
 
 /**
  * Fetches the activities of a course from Moodle.
@@ -16,10 +19,12 @@ export async function fetch_course_activities(
 	const url = new URL(base);
 	url.pathname = "/course/view.php";
 	url.searchParams.set("id", id.toString());
+	log("Fetching activities", url);
 
 	const res = await fetch(url);
 	const html = await res.text();
 	const $ = load(html);
+	log("Fetched response", html);
 
 	const result: Record<string, Record<ActivityType, ActivityMeta[]>> = {};
 
@@ -59,5 +64,6 @@ export async function fetch_course_activities(
 		result[section_name] = activity;
 	}
 
+	log("Fetched activities", result);
 	return result;
 }
