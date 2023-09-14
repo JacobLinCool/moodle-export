@@ -1,6 +1,6 @@
 {
 	"include": ["**/*.ts"],
-	"exclude": ["**/dist", "**/lib"],
+	"exclude": ["**/dist", "**/lib", "packages/cloudflare-pages/**/*"],
 	"compilerOptions": {
 		"target": "ESNext",
 		"lib": ["ESNext"],
