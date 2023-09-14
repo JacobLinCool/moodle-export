@@ -1,4 +1,4 @@
-import { MoodleExporter, debug } from "moodle-export";
+import { MoodleExporter } from "moodle-export";
 import type { RequestHandler } from "./$types";
 
 interface ExportOptions {
@@ -26,9 +26,9 @@ async function export_data(opt: ExportOptions) {
 		exporter = await MoodleExporter.init({ base, username, password });
 	}
 
-	const log = debug("export");
-	log.enabled = true;
-	log("Exporting");
+	const tag = `export:${base}:${username ?? session ?? "anonymous"}`;
+	let start = Date.now();
+	console.log(`[${tag}]`, "Exporting courses");
 	const courses = await exporter.courses();
 	const result = await Promise.all(
 		courses
@@ -49,7 +49,7 @@ async function export_data(opt: ExportOptions) {
 				};
 			}),
 	);
-	log("Exported");
+	console.log(`[${tag}]`, `Exported ${result.length} courses in ${Date.now() - start}ms`);
 
 	return new Response(JSON.stringify(result), {
 		headers: {
