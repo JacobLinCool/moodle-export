@@ -1,0 +1,35 @@
+{
+	"name": "moodle-export",
+	"description": "A streamlined library for retrieving data from Moodle.",
+	"version": "0.0.0",
+	"author": "JacobLinCool <jacoblincool@gmail.com> (https://jacoblin.cool)",
+	"license": "AGPL-3.0",
+	"keywords": [],
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup",
+		"build:docs": "typedoc --out docs src"
+	},
+	"dependencies": {
+		"cheerio": "1.0.0-rc.12",
+		"fetch-cookie": "^2.1.0"
+	},
+	"devDependencies": {
+		"tsup": "^7.2.0",
+		"typedoc": "^0.25.1",
+		"typescript": "^5.2.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JacobLinCool/moodle-export.git"
+	},
+	"bugs": {
+		"url": "https://github.com/JacobLinCool/moodle-export/issues"
+	},
+	"homepage": "https://jacoblincool.github.io/moodle-export"
+}

@@ -1,0 +1,6 @@
+{
+	"entryPoints": ["packages/*"],
+	"name": "Moodle Export",
+	"entryPointStrategy": "packages",
+	"includeVersion": true
+}
