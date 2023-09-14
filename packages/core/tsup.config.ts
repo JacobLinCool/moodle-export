@@ -9,4 +9,11 @@ export default defineConfig(() => ({
 	clean: true,
 	splitting: false,
 	dts: true,
+	noExternal: [/.*/],
+	esbuildOptions: (x) => {
+		x.alias = {
+			punycode: "punycode/",
+		};
+		return x;
+	},
 }));
