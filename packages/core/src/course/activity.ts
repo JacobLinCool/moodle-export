@@ -61,7 +61,9 @@ export async function fetch_course_activities(
 			activity[type] = activities;
 		}
 
-		result[section_name] = activity;
+		if (Object.values(activity).some((a) => a.length > 0)) {
+			result[section_name] = activity;
+		}
 	}
 
 	log("Fetched activities", result);
