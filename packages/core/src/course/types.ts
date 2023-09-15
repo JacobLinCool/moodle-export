@@ -57,7 +57,7 @@ export interface Attendee {
 /**
  * Defines the possible types of activities in a course.
  */
-export type ActivityType = "assign" | "forum" | "quiz" | "url" | "choice" | "folder";
+export type ActivityType = "assign" | "forum" | "quiz" | "url" | "choice" | "folder" | "resource";
 
 /**
  * Represents a single activity metadata within a course.

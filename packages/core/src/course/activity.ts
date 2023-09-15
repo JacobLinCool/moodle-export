@@ -39,9 +39,18 @@ export async function fetch_course_activities(
 			url: [],
 			choice: [],
 			folder: [],
+			resource: [],
 		};
 
-		const types: ActivityType[] = ["assign", "forum", "quiz", "url", "choice", "folder"];
+		const types: ActivityType[] = [
+			"assign",
+			"forum",
+			"quiz",
+			"url",
+			"choice",
+			"folder",
+			"resource",
+		];
 		for (const type of types) {
 			const elm_items = section.querySelectorAll(`[id^=module].${type}`);
 			const activities: ActivityMeta[] = [];
