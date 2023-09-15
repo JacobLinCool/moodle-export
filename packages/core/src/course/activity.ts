@@ -15,7 +15,7 @@ export async function fetch_course_activities(
 	fetch: typeof globalThis.fetch,
 	base: string,
 	id: number,
-): Promise<Record<string, Record<ActivityType, ActivityMeta[]>>> {
+): Promise<Record<string, Partial<Record<ActivityType, ActivityMeta[]>>>> {
 	const url = new URL(base);
 	url.pathname = "/course/view.php";
 	url.searchParams.set("id", id.toString());
@@ -26,21 +26,13 @@ export async function fetch_course_activities(
 	const root = parse(html);
 	log("Fetched response", html);
 
-	const result: Record<string, Record<ActivityType, ActivityMeta[]>> = {};
+	const result: Record<string, Partial<Record<ActivityType, ActivityMeta[]>>> = {};
 
 	const sections = root.querySelectorAll("[id^=section]");
 	for (const section of sections) {
 		const section_name = section.querySelector("h3.sectionname")?.text || "";
 
-		const activity: Record<ActivityType, ActivityMeta[]> = {
-			assign: [],
-			forum: [],
-			quiz: [],
-			url: [],
-			choice: [],
-			folder: [],
-			resource: [],
-		};
+		const activity: Partial<Record<ActivityType, ActivityMeta[]>> = {};
 
 		const types: ActivityType[] = [
 			"assign",
@@ -65,10 +57,12 @@ export async function fetch_course_activities(
 				activities.push({ name, url, contentafterlink });
 			}
 
-			activity[type] = activities;
+			if (activities.length > 0) {
+				activity[type] = activities;
+			}
 		}
 
-		if (Object.values(activity).some((a) => a.length > 0)) {
+		if (Object.keys(activity).length > 0) {
 			result[section_name] = activity;
 		}
 	}

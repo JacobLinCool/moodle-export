@@ -1,3 +1,5 @@
+import type { Activity, ResourceActivity, UrlActivity } from "../activity";
+
 /**
  * Represents a single course item with its metadata.
  */
@@ -70,3 +72,13 @@ export interface ActivityMeta {
 	/** Additional content or details to display after the link (optional). */
 	contentafterlink?: string;
 }
+
+export type Section = Partial<{
+	resource: ResourceActivity[];
+	url: UrlActivity[];
+	assign: Activity[];
+	forum: Activity[];
+	quiz: Activity[];
+	choice: Activity[];
+	folder: Activity[];
+}>;
