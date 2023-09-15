@@ -103,15 +103,15 @@ importers:
 
     packages/core:
         dependencies:
-            cheerio:
-                specifier: 1.0.0-rc.12
-                version: 1.0.0-rc.12
             debug:
                 specifier: ^4.3.4
                 version: 4.3.4
             fetch-cookie:
                 specifier: ^2.1.0
                 version: 2.1.0
+            node-html-parser:
+                specifier: ^6.1.9
+                version: 6.1.9
             punycode:
                 specifier: ^2.3.0
                 version: 2.3.0
@@ -2221,36 +2221,6 @@ packages:
             }
         dev: true
 
-    /cheerio-select@2.1.0:
-        resolution:
-            {
-                integrity: sha512-9v9kG0LvzrlcungtnJtpGNxY+fzECQKhK4EGJX2vByejiMX84MFNQw4UxPJl3bFbTMw+Dfs37XaIkCwTZfLh4g==,
-            }
-        dependencies:
-            boolbase: 1.0.0
-            css-select: 5.1.0
-            css-what: 6.1.0
-            domelementtype: 2.3.0
-            domhandler: 5.0.3
-            domutils: 3.1.0
-        dev: false
-
-    /cheerio@1.0.0-rc.12:
-        resolution:
-            {
-                integrity: sha512-VqR8m68vM46BNnuZ5NtnGBKIE/DfN0cRIzg9n40EIq9NOv90ayxLBXA8fXC5gquFRGJSTRqBq25Jt2ECLR431Q==,
-            }
-        engines: { node: ">= 6" }
-        dependencies:
-            cheerio-select: 2.1.0
-            dom-serializer: 2.0.0
-            domhandler: 5.0.3
-            domutils: 3.1.0
-            htmlparser2: 8.0.2
-            parse5: 7.1.2
-            parse5-htmlparser2-tree-adapter: 7.0.0
-        dev: false
-
     /chokidar@3.5.3:
         resolution:
             {
@@ -3663,24 +3633,20 @@ packages:
             function-bind: 1.1.1
         dev: true
 
+    /he@1.2.0:
+        resolution:
+            {
+                integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==,
+            }
+        hasBin: true
+        dev: false
+
     /hosted-git-info@2.8.9:
         resolution:
             {
                 integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==,
             }
         dev: true
-
-    /htmlparser2@8.0.2:
-        resolution:
-            {
-                integrity: sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==,
-            }
-        dependencies:
-            domelementtype: 2.3.0
-            domhandler: 5.0.3
-            domutils: 3.1.0
-            entities: 4.5.0
-        dev: false
 
     /http-cache-semantics@4.1.1:
         resolution:
@@ -4796,6 +4762,16 @@ packages:
         engines: { node: ">= 6.13.0" }
         dev: true
 
+    /node-html-parser@6.1.9:
+        resolution:
+            {
+                integrity: sha512-nQ+MRf0PmRTLcMalVqMsWvceSaBydBCBlnQSL78HVk/E8e0Aazyao4SI9aB67XAAgOgHMsw7q5dJBUPPt9XE3g==,
+            }
+        dependencies:
+            css-select: 5.1.0
+            he: 1.2.0
+        dev: false
+
     /node-releases@2.0.13:
         resolution:
             {
@@ -5055,25 +5031,6 @@ packages:
             lines-and-columns: 1.2.4
         dev: true
 
-    /parse5-htmlparser2-tree-adapter@7.0.0:
-        resolution:
-            {
-                integrity: sha512-B77tOZrqqfUfnVcOrUvfdLbz4pu4RopLD/4vmu3HUPswwTA8OH0EMW9BlWR2B0RCoiZRAHEUu7IxeP1Pd1UU+g==,
-            }
-        dependencies:
-            domhandler: 5.0.3
-            parse5: 7.1.2
-        dev: false
-
-    /parse5@7.1.2:
-        resolution:
-            {
-                integrity: sha512-Czj1WaSVpaoj0wbhMzLmWD69anp2WH7FXMB9n1Sy8/ZFF9jolSQVMu1Ij5WIyGmcBmhk7EOndpO4mIpihVqAXw==,
-            }
-        dependencies:
-            entities: 4.5.0
-        dev: false
-
     /path-exists@4.0.0:
         resolution:
             {
@@ -5262,6 +5219,25 @@ packages:
         dependencies:
             camelcase-css: 2.0.1
             postcss: 8.4.29
+        dev: true
+
+    /postcss-load-config@4.0.1:
+        resolution:
+            {
+                integrity: sha512-vEJIc8RdiBRu3oRAI0ymerOn+7rPuMvRXslTvZUKZonDHFIczxztIyJ1urxM1x9JXEikvpWWTUUqal5j/8QgvA==,
+            }
+        engines: { node: ">= 14" }
+        peerDependencies:
+            postcss: ">=8.0.9"
+            ts-node: ">=9.0.0"
+        peerDependenciesMeta:
+            postcss:
+                optional: true
+            ts-node:
+                optional: true
+        dependencies:
+            lilconfig: 2.1.0
+            yaml: 2.3.1
         dev: true
 
     /postcss-load-config@4.0.1(postcss@8.4.29):
@@ -6779,7 +6755,7 @@ packages:
             execa: 5.1.1
             globby: 11.1.0
             joycon: 3.1.1
-            postcss-load-config: 4.0.1(postcss@8.4.29)
+            postcss-load-config: 4.0.1
             resolve-from: 5.0.0
             rollup: 3.28.1
             source-map: 0.8.0-beta.0

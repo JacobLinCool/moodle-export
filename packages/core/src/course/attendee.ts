@@ -1,4 +1,4 @@
-import { load } from "cheerio";
+import { parse } from "node-html-parser";
 import { ext } from "../debug";
 import type { Attendee } from "./types";
 
@@ -26,28 +26,24 @@ export async function fetch_course_attendees(
 	const html = await res.text();
 	log("Fetched response", html);
 
-	const $ = load(html);
-	const rows = $("tr[id^=user-index-participants][class='']").toArray();
+	const root = parse(html);
+	const participants = root.querySelectorAll("tr[id^=user-index-participants][class='']");
 
 	const attendees: Attendee[] = [];
-	for (const row of rows) {
-		const $row = $(row);
-		const $name = $row.find("td.cell.c0");
-		const $role = $row.find("td.cell.c1");
-		const $group = $row.find("td.cell.c2");
-		const $lastaccess = $row.find("td.cell.c3");
+	for (const participant of participants) {
+		const elm_name = participant.querySelector("td.cell.c0");
+		const elm_role = participant.querySelector("td.cell.c1");
+		const elm_group = participant.querySelector("td.cell.c2");
+		const elm_lastaccess = participant.querySelector("td.cell.c3");
 
 		attendees.push({
-			name: $name.text(),
-			img: $name.find("img").attr("src") ?? "",
-			role: $role.text(),
-			group: $group.text(),
-			lastaccess: $lastaccess.text(),
+			name: elm_name?.text || "",
+			img: elm_name?.querySelector("img")?.getAttribute("src") || "",
+			role: elm_role?.text || "",
+			group: elm_group?.text || "",
+			lastaccess: elm_lastaccess?.text || "",
 		});
 	}
-
-	// release the memory
-	$.root().empty();
 
 	log("Fetched attendees", attendees);
 	return attendees;

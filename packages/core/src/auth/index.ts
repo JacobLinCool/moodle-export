@@ -1,5 +1,5 @@
-import { load } from "cheerio";
 import cookie from "fetch-cookie";
+import { parse } from "node-html-parser";
 import { ext } from "../debug";
 
 const log = ext("auth");
@@ -79,8 +79,8 @@ export async function get_logintoken(
 	const res = await fetch(url);
 	const html = await res.text();
 
-	const $ = load(html);
-	const logintoken = $("input[name=logintoken]").attr("value");
+	const root = parse(html);
+	const logintoken = root.querySelector("input[name=logintoken]")?.getAttribute("value");
 	if (!logintoken) {
 		throw new Error("Could not get logintoken");
 	}

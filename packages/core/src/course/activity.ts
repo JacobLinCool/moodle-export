@@ -1,4 +1,4 @@
-import { load } from "cheerio";
+import { parse } from "node-html-parser";
 import { ext } from "../debug";
 import type { ActivityMeta, ActivityType } from "./types";
 
@@ -23,14 +23,14 @@ export async function fetch_course_activities(
 
 	const res = await fetch(url);
 	const html = await res.text();
-	const $ = load(html);
+	const root = parse(html);
 	log("Fetched response", html);
 
 	const result: Record<string, Record<ActivityType, ActivityMeta[]>> = {};
 
-	const sections = $("[id^=section]").toArray();
+	const sections = root.querySelectorAll("[id^=section]");
 	for (const section of sections) {
-		const section_name = $(section).find("h3.sectionname").text();
+		const section_name = section.querySelector("h3.sectionname")?.text || "";
 
 		const activity: Record<ActivityType, ActivityMeta[]> = {
 			assign: [],
@@ -43,17 +43,15 @@ export async function fetch_course_activities(
 
 		const types: ActivityType[] = ["assign", "forum", "quiz", "url", "choice", "folder"];
 		for (const type of types) {
-			const $activity = $(section).find(`[id^=module].${type}`);
+			const elm_items = section.querySelectorAll(`[id^=module].${type}`);
 			const activities: ActivityMeta[] = [];
 
-			for (const item of $activity.toArray()) {
-				const $item = $(item);
-				const name = $item.find(".activityinstance").text();
-				const url = $item.find(".activityinstance a").attr("href") ?? "";
+			for (const item of elm_items) {
+				const name = item.querySelector(".activityinstance")?.text || "";
+				const url = item.querySelector(".activityinstance a")?.getAttribute("href") || "";
 
-				const $contentafterlink = $item.find(".contentafterlink");
-				const contentafterlink =
-					$contentafterlink.length > 0 ? $contentafterlink.text() : undefined;
+				const elm_contentafterlink = item.querySelector(".contentafterlink");
+				const contentafterlink = elm_contentafterlink?.text ?? undefined;
 
 				activities.push({ name, url, contentafterlink });
 			}
@@ -65,9 +63,6 @@ export async function fetch_course_activities(
 			result[section_name] = activity;
 		}
 	}
-
-	// release the memory
-	$.root().empty();
 
 	log("Fetched activities", result);
 	return result;

@@ -16,9 +16,9 @@
 		"build:docs": "typedoc --out docs src"
 	},
 	"dependencies": {
-		"cheerio": "1.0.0-rc.12",
 		"debug": "^4.3.4",
 		"fetch-cookie": "^2.1.0",
+		"node-html-parser": "^6.1.9",
 		"punycode": "^2.3.0"
 	},
 	"devDependencies": {

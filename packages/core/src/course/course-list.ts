@@ -1,4 +1,4 @@
-import { load } from "cheerio";
+import { parse } from "node-html-parser";
 import { ext } from "../debug";
 import { Course } from "./course";
 import type { CourseListItem } from "./types";
@@ -57,8 +57,8 @@ export async function get_sesskey(fetch: typeof globalThis.fetch, base: string):
 	const html = await res.text();
 	log("Fetched response", html);
 
-	const $ = load(html);
-	const sesskey = $("input[name=sesskey]").attr("value");
+	const root = parse(html);
+	const sesskey = root.querySelector("input[name=sesskey]")?.getAttribute("value");
 	if (!sesskey) {
 		throw new Error("Could not get sesskey");
 	}
