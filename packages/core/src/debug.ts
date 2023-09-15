@@ -3,7 +3,7 @@
 let _debugging = false;
 export function debug(name: string) {
 	let last = Date.now();
-	const x = (...args: any[]) => {
+	const x = (...args: unknown[]) => {
 		if (!_debugging) {
 			return;
 		}

@@ -46,6 +46,9 @@ export async function fetch_course_attendees(
 		});
 	}
 
+	// release the memory
+	$.root().empty();
+
 	log("Fetched attendees", attendees);
 	return attendees;
 }

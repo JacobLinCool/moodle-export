@@ -1,3 +1,4 @@
+import { Semaphore } from "async-mutex";
 import { MoodleExporter } from "moodle-export";
 
 interface ExportOptions {
@@ -29,6 +30,9 @@ export async function export_data(opt: ExportOptions) {
 	let start = Date.now();
 	console.log(`[${tag}]`, "Exporting courses");
 	const courses = await exporter.courses();
+
+	const sem = new Semaphore(2);
+
 	const result = await Promise.all(
 		courses
 			.filter((c) => {
@@ -39,8 +43,12 @@ export async function export_data(opt: ExportOptions) {
 				return c.meta.fullname.toLowerCase().includes(opt.filter.trim().toLowerCase());
 			})
 			.map(async (course) => {
+				const [, release] = await sem.acquire();
+				console.log(`[${tag}]`, `Exporting ${course.meta.fullname}`);
 				const attendees = await course.attendees();
 				const activities = await course.activities();
+				console.log(`[${tag}]`, `Exported ${course.meta.fullname}`);
+				release();
 				return {
 					...course.meta,
 					attendees,

@@ -66,6 +66,9 @@ export async function fetch_course_activities(
 		}
 	}
 
+	// release the memory
+	$.root().empty();
+
 	log("Fetched activities", result);
 	return result;
 }
