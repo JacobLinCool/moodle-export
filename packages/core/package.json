@@ -1,7 +1,7 @@
 {
 	"name": "moodle-export",
 	"description": "A streamlined library for retrieving data from Moodle.",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"author": "JacobLinCool <jacoblincool@gmail.com> (https://jacoblin.cool)",
 	"license": "AGPL-3.0",
 	"keywords": [],
