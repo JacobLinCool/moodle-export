@@ -38,5 +38,5 @@
 		"url": "https://github.com/JacobLinCool/moodle-export/issues"
 	},
 	"homepage": "https://jacoblincool.github.io/moodle-export",
-	"packageManager": "pnpm@8.7.5"
+	"packageManager": "pnpm@8.15.5"
 }
